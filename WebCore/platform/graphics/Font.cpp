@@ -175,11 +175,11 @@ void Font::drawText(GraphicsContext* context, const TextRun& run, const FloatPoi
 #endif
 
 #if USE(FONT_FAST_PATH)
-    if (canUseGlyphCache(run))
+    //if (canUseGlyphCache(run))
         return drawSimpleText(context, run, point, from, to);
 #endif
 
-    return drawComplexText(context, run, point, from, to);
+    //return drawComplexText(context, run, point, from, to);
 }
 
 float Font::floatWidth(const TextRun& run, HashSet<const SimpleFontData*>* fallbackFonts) const

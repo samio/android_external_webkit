@@ -42,6 +42,9 @@
 #include "break_lines.h"
 #include <wtf/AlwaysInline.h>
 
+#include "unicode/ushape.h"
+#include "ArabicShapingUtils.h"
+
 using namespace std;
 using namespace WTF;
 using namespace Unicode;
@@ -69,6 +72,15 @@ RenderText::RenderText(Node* node, PassRefPtr<StringImpl> str)
      , m_isAllASCII(charactersAreAllASCII(m_text.get()))
      , m_knownNotToUseFallbackFonts(false)
 {
+
+    //
+    // Arabic Reshaping.
+    // Added By: Ayman <aalsanad@gmail.com>
+    //  
+    m_text = ArabicShapingUtils::shape (m_text);
+    // --- End of Shaping ---
+
+
     ASSERT(m_text);
 
     setIsText();
@@ -937,6 +949,17 @@ void RenderText::setTextInternal(PassRefPtr<StringImpl> text)
 {
     ASSERT(text);
     m_text = document()->displayStringModifiedByEncoding(text);
+
+    //
+    // Arabic Reshaping.
+    // Added By: Ayman <aalsanad@gmail.com>
+    //
+    m_text = ArabicShapingUtils::shape (m_text);
+    // --- End of Reshaping --- 
+
+
+
+
     ASSERT(m_text);
 
 #if ENABLE(SVG)
